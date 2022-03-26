@@ -14,19 +14,7 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    print(message.content)
     await client.process_commands(message)
-
-@client.command()
-async def j(ctx):
-    if ctx.author.voice is None:
-        await ctx.send('Silahkan join voice channel terlebih dahulu!!')
-    voice_channel = ctx.author.voice.channel
-    if ctx.voice_client is None:
-        await voice_channel.connect()
-    else:
-        await ctx.voice_client.move_to(voice_channel)
-    await ctx.send('Joined')
 
 @client.command()
 async def dc(ctx):
@@ -38,12 +26,12 @@ async def p(ctx, *, arg):
     #join
     if ctx.author.voice is None:
         await ctx.send('Silahkan join voice channel terlebih dahulu!!')
-    voice_channel = ctx.author.voice.channel
-    if ctx.voice_client is None:
-        await voice_channel.connect()
     else:
-        await ctx.voice_client.move_to(voice_channel)
-    await ctx.send('Joined')
+        voice_channel = ctx.author.voice.channel
+        if ctx.voice_client is None:
+            await voice_channel.connect()
+        else:
+            await ctx.voice_client.move_to(voice_channel)
 
     #play
     ctx.voice_client.stop()
@@ -66,7 +54,7 @@ async def pause(ctx):
 @client.command()
 async def resume(ctx):
     await ctx.voice_client.resume()
-    await ctx.send('Resume')
+    await ctx.send('Resumed')
 
 @client.command()
 async def skip(ctx):
